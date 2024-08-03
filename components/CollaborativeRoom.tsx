@@ -6,6 +6,8 @@ import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs'
 import { ClientSideSuspense, RoomProvider } from '@liveblocks/react/suspense'
 import React, { ReactNode, useRef, useState } from 'react'
 import ActiveCollaborators from './ActiveCollaborators';
+import { Input } from './ui/input';
+
 
 const CollaborativeRoom = ({ roomId, roomMetadata }: CollaborativeRoomProps) => {
 
@@ -22,8 +24,14 @@ const CollaborativeRoom = ({ roomId, roomMetadata }: CollaborativeRoomProps) => 
             <ClientSideSuspense fallback={<div>Loading…</div>}>
                 <div className='collaborative-room'>
                     <Header>
-                        <div className='flex w-fit items-center justify-center gap-2'>
-                            <p className='document-title'>Share</p>
+                        <div ref={containerRef} className='flex w-fit items-center justify-center gap-2'>
+                            {editing && !loading ? (
+                                <Input />
+                            ) :
+                                <>
+                                    <p className='document-title'>{documentTitle}</p>
+                                </>
+                            }
                         </div>
                         <div className='flex flex-1 w-full justify-end gap-2 sm:gap-3'>
                             <ActiveCollaborators />
